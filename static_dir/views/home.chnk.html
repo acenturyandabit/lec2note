@@ -27,7 +27,7 @@
         
         .searchbar {
             flex: 0 1 30px;
-            margin: 20px 0px;
+            margin: 20px;
         }
         
         .searchbar>* {
@@ -59,15 +59,13 @@
         </div>
         <div class="results_container">
             <div class="upload_button">
-                <form action="/uploadFile" method="post" enctype="multipart/form-data">
+                <form id="uploadform" action="/uploadFile" method="post" enctype="multipart/form-data">
                     <div>
                         <label for="video_uploads">Choose videos to upload (MP4)</label>
-                        <form ref='uploadForm' id='uploadForm' action='http://localhost:8000/upload' method='post' encType="multipart/form-data">
-                            <input type="file" id="video_uploads" name="video_uploads" accept=".mp4">
-                            <input type="submit">Upload!</input>
-                        </form>
+                        <input type="file" id="video_uploads" name="video_uploads" accept=".mp4">
                     </div>
                     <div>
+                        <button>Submit</button>
                     </div>
                 </form>
             </div>

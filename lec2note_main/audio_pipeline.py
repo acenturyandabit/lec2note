@@ -7,7 +7,7 @@ from google.cloud import speech
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.path.dirname (os.path.abspath(__file__)) + "/google-credentials.json"
 
 
-def transcribe_file(speech_file, cache_dir=None, start_time=0):
+def transcribe_file(speech_file, cache_dir=None, start_time=0, audioChannels=2):
     print("Transcribing file using google speech...")
     cache_path = None
     if cache_dir!=None:
@@ -29,7 +29,7 @@ def transcribe_file(speech_file, cache_dir=None, start_time=0):
     audio = speech.RecognitionAudio(content=content)
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.FLAC,
-        audio_channel_count=2,
+        audio_channel_count=audioChannels,
         sample_rate_hertz=16000,
         language_code="en-US",
         enable_word_time_offsets=True,
@@ -92,6 +92,14 @@ def get_file_size(inputFile):
         inputFile]
     )).decode('utf-8'))
 
+def get_audio_channels(inputFile):
+    return int((subprocess.check_output(
+        ["ffprobe", "-v", "0", "-show_entries",
+        "stream=channels", "-of",
+        "compact=p=0:nk=1",
+        inputFile]
+    )).decode('utf-8'))
+
 def audio_pipeline(inputFile, outputFolder, verbose=False):
 
     # Create the audio file caches folder if it doesn't exist
@@ -106,14 +114,15 @@ def audio_pipeline(inputFile, outputFolder, verbose=False):
 
     # Cut the file into 10s snippets and send to google cloud
     timeCompletedUpTo=0
-    duration = 10 # seconds
+    duration = 15 # seconds - each request is rounded up to 15s.
     timeToComplete = get_file_size(inputFile)
+    channelCount = get_audio_channels(inputFile)
     fullTranscript = []
     while timeCompletedUpTo<timeToComplete:
         print (f"transcribing {timeCompletedUpTo} to {timeCompletedUpTo+duration}s...")
         outputFile = f"{audioCacheDir}/audioOnly_{timeCompletedUpTo}_{timeCompletedUpTo+duration}.flac"
         run_ffmpeg(inputFile, audioCacheDir, timeCompletedUpTo, duration, outputFile)
-        partialTranscript = transcribe_file(outputFile, cache_dir = transcriptCacheDir, start_time=timeCompletedUpTo)
+        partialTranscript = transcribe_file(outputFile, cache_dir = transcriptCacheDir, start_time=timeCompletedUpTo, audioChannels=channelCount)
         fullTranscript.append(partialTranscript)
         timeCompletedUpTo += duration
     if verbose:

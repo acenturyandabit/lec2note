@@ -7,7 +7,29 @@ controller.reserveView("home");
     let resultsContainer = templateDiv.querySelector(".results_container");
     let videoListingsCache = [];
 
-    // Add a file upload here.
+    // Code for file upload
+    function formSubmit(event) {
+        var url = "/uploadFile";
+        var request = new XMLHttpRequest();
+        request.open('POST', url, true);
+        request.onload = function() { // request successful
+            // we can use server response to our request now
+            console.log(request.responseText);
+        };
+
+        request.onerror = function() {
+            // request failed
+        };
+
+        request.send(new FormData(event.target)); // create FormData from form that triggered event
+        event.preventDefault();
+    }
+
+    templateDiv.querySelector("#uploadform").addEventListener("submit", formSubmit);
+
+
+
+
 
     controller.registerView("home", {}, {
         load: async() => {

@@ -1,5 +1,8 @@
 import argparse
 import os
+import audio_pipeline
+import video_pipeline
+import json_pipeline
 
 parser = argparse.ArgumentParser()
 parser.add_argument("inputFile")

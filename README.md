@@ -1,0 +1,1 @@
+You need to add your google credentials file as a `google-credentials.json` in the `lec2note_main` directory

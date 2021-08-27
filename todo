@@ -1,12 +1,16 @@
-upload video to website
+make it so when you upload the file the page refreshes and the new item shows up with a progress bar
 
-add tag functionality
+Restyle home page with some greebling
 
-get the pipeline system going
+Run through the presentation, create 3 min video
 
-Restyle the home page
+Allow editing of files
 
-Record 3 min video
+variance-based video segmentation -- actually somewhat an issue
+
+Create a landing page?
+
+add user accounts + a file length limit + a processing queue, then pop it on steven's server ... or dont
 
 
 upload to my server

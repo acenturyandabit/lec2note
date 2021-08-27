@@ -5,3 +5,6 @@ google-credentials.json
 test.output.json
 lec2note_main/audio_caches
 lec2note_main/transcript_caches
+lec2note_main/frames
+lec2note_main/thumbnail.png
+__pycache__

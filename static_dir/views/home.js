@@ -17,11 +17,12 @@ controller.reserveView("home");
             let videoList = lv_json.results;
             videoList.forEach(videoName => {
                 // Copy the template
-                let newVideoListing = videoTabTemplate.cloneNode();
-                newVideoListing.addEventListner("click", (e) => {
+                let newVideoListing = videoTabTemplate.cloneNode(true);
+                newVideoListing.addEventListener("click", (e) => {
                     controller.state.video = videoName;
                     controller.switchView("showVideo");
                 });
+                newVideoListing.style.display = "";
                 // Modify the template with the specifics
                 newVideoListing.querySelector(".videoTitle").innerText = videoName;
                 // Append the template

@@ -1,0 +1,41 @@
+{
+    "meta": {
+        "fileName": "sampleVideo.mp4"
+    },
+    "scenes": [{
+            "start_time": 0.0,
+            "end_time": 0.12,
+            "type": "still",
+            "fname": "frames/0_3.jpg",
+            "words": ""
+        },
+        {
+            "start_time": 0.12,
+            "end_time": 1.24,
+            "type": "still",
+            "fname": "frames/3_31.jpg",
+            "words": "illa weekly build nights "
+        },
+        {
+            "start_time": 1.24,
+            "end_time": 2.16,
+            "type": "still",
+            "fname": "frames/31_54.jpg",
+            "words": "events and competitions "
+        },
+        {
+            "start_time": 2.16,
+            "end_time": 3.6,
+            "type": "still",
+            "fname": "frames/54_90.jpg",
+            "words": "where more than happy to teach her "
+        },
+        {
+            "start_time": 3.6,
+            "end_time": 6.52,
+            "type": "still",
+            "fname": "frames/90_163.jpg",
+            "words": "from an absolute beginner level "
+        }
+    ]
+}

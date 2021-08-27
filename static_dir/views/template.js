@@ -7,12 +7,11 @@ controller.reserveView("template");
 
     // Get consts here
 
-    controller.registerView("template", {
+    controller.registerView("template", {}, {
         load: async() => {
             // Show the templateDiv by clearing display none
             templateDiv.style.display = "";
             // Do any fetching etc here
-
         },
         unload: () => {
             templateDiv.style.display = "none";

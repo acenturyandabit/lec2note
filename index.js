@@ -8,8 +8,15 @@ app.get("/listVideos", (req, res) => {
     const arrayOfFiles = fs.readdirSync("./static_dir/database")
     res.send({
         results: arrayOfFiles
-    })
-})
+    });
+});
+
+app.get("/fetchVideo", (req, res) => {
+    const arrayOfFiles = fs.readdirSync("./static_dir/database")
+    res.send({
+        results: arrayOfFiles
+    });
+});
 
 // Upload a video to the website
 // Enumerate my videos

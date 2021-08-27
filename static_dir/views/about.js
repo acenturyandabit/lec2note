@@ -3,13 +3,12 @@ controller.reserveView("about");
     let resp = await fetch("views/about.chnk.html");
     let template = await resp.text();
     let templateDiv = htmlwrap(template);
-    document.body.appendChild(templateDiv);
-
     // Get consts here
 
     controller.registerView("about", {}, {
         load: async() => {
-            // Show the templateDiv by clearing display none
+            // Show the templateDiv
+            document.querySelector(".main_container").appendChild(templateDiv);
             templateDiv.style.display = "";
             // Do any fetching etc here
 

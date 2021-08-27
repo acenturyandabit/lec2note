@@ -3,13 +3,13 @@ controller.reserveView("home");
     let resp = await fetch("views/home.chnk.html");
     let template = await resp.text();
     let templateDiv = htmlwrap(template);
-    document.body.appendChild(templateDiv);
     let videoTabTemplate = templateDiv.querySelector(".result_template");
     let resultsContainer = templateDiv.querySelector(".results_container");
     // Add a file upload here.
 
-    controller.registerView("home", { default: true }, {
+    controller.registerView("home", {}, {
         load: async() => {
+            document.querySelector(".main_container").appendChild(templateDiv);
             templateDiv.style.display = "";
             // Query existing documents and show them 
             let lv_resp = await fetch("listVideos");

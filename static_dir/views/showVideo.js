@@ -3,13 +3,14 @@ controller.reserveView("showVideo");
     let resp = await fetch("views/showVideo.chnk.html");
     let template = await resp.text();
     let templateDiv = htmlwrap(template);
-    document.body.appendChild(templateDiv);
 
     // Get consts here
 
 
     controller.registerView("showVideo", {
         load: async() => {
+            document.querySelector(".main_container").appendChild(templateDiv);
+            templateDiv.style.display = "";
             // fetch the video info and display it
             let st_resp = await fetch("fetchVideo?" + controller.state.video);
             let st_json = await st_resp.json();

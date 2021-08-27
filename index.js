@@ -15,6 +15,10 @@ app.post("/processFile", (req, res) => {
     // Takes a file and processes it using the pipeline (in the background)
 })
 
+app.post("/uploadFile", (req, res) => {
+    // Uploads the file
+    console.log(req.body);
+})
 
 // Upload a video to the website
 // Enumerate my videos

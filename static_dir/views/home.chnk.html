@@ -1,0 +1,49 @@
+<div style="display:none" id="view_home">
+    <style>
+        #view_home {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 100%;
+        }
+        
+        #view_home .sidebar {
+            flex: 0 1 5%;
+            display: flex;
+            flex-direction: column;
+            background: #FCE5CD;
+        }
+        
+        #view_home .mainView {
+            flex: 1 0 95%;
+            display: flex;
+            flex-direction: column;
+            background: #eeeeee;
+        }
+        
+        #view_home .sidebar>img {
+            width: 100%;
+        }
+    </style>
+    <div class="sidebar">
+        <img src="favicon.png">
+        <div>About</div>
+    </div>
+    <div class="mainView">
+        <div class="searchbar"><input placeholder="Search"><button>Go</button></button>
+        </div>
+        <div class="results_container">
+            <div class="upload_button">
+                <span>Upload video...</span>
+            </div>
+            <div class="result_template" style="display:none">
+                <img>
+                <div>
+                    <span class="videoTitle"></span>
+                    <span class="videoTags"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

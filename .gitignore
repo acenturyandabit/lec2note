@@ -8,3 +8,5 @@ lec2note_main/transcript_caches
 lec2note_main/frames
 lec2note_main/thumbnail.png
 __pycache__
+upload_tmp/*
+!upload_tmp/placeholder

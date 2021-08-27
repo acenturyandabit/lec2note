@@ -5,6 +5,8 @@ controller.reserveView("home");
     let templateDiv = htmlwrap(template);
     let videoTabTemplate = templateDiv.querySelector(".result_template");
     let resultsContainer = templateDiv.querySelector(".results_container");
+    let videoListingsCache = [];
+
     // Add a file upload here.
 
     controller.registerView("home", {}, {
@@ -25,12 +27,15 @@ controller.reserveView("home");
                 newVideoListing.style.display = "";
                 // Modify the template with the specifics
                 newVideoListing.querySelector(".videoTitle").innerText = videoName;
+                newVideoListing.querySelector("img").src = `database/${videoName}/thumbnail.png`;
                 // Append the template
                 resultsContainer.appendChild(newVideoListing);
+                videoListingsCache.push(newVideoListing);
             })
         },
         unload: () => {
             templateDiv.style.display = "none";
+            videoListingsCache.forEach(i => i.remove());
         }
     })
 })();

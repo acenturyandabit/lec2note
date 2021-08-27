@@ -27,6 +27,11 @@
         
         .searchbar {
             flex: 0 1 30px;
+            margin: 20px 0px;
+        }
+        
+        .searchbar>* {
+            font-size: 20px;
         }
         
         .results_container {
@@ -38,25 +43,31 @@
             flex-wrap: wrap;
         }
         
+        .result_template>img {
+            width: 100%;
+            max-height: calc(100% - 1.5em);
+        }
+        
         .results_container>div {
             flex: 0 0 20%;
-            margin: 30px;
             height: 20vh;
             border: 1px solid black;
         }
     </style>
     <div class="mainView">
-        <div class="searchbar"><input placeholder="Search"><button>Go</button></button>
+        <div class="searchbar"><input style="width: 80vw" placeholder="Search by name, tag, time or more..."><button>Go</button></button>
         </div>
         <div class="results_container">
             <div class="upload_button">
                 <form action="/uploadFile" method="post" enctype="multipart/form-data">
                     <div>
-                      <label for="video_uploads">Choose videos to upload (MP4)</label>
-                      <input type="file" id="video_uploads" name="video_uploads" accept=".mp4">
+                        <label for="video_uploads">Choose videos to upload (MP4)</label>
+                        <form ref='uploadForm' id='uploadForm' action='http://localhost:8000/upload' method='post' encType="multipart/form-data">
+                            <input type="file" id="video_uploads" name="video_uploads" accept=".mp4">
+                            <input type="submit">Upload!</input>
+                        </form>
                     </div>
                     <div>
-                      <button>Submit</button>
                     </div>
                 </form>
             </div>

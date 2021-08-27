@@ -1,10 +1,64 @@
-<div style="display:none" id="view_template">
+<div style="display:none" id="view_showvideo">
     <style>
-        #view_template {
-            display: block;
+        #view_showvideo {
+            display: flex;
+            flex-direction: column;
             width: 100%;
             height: 100%;
         }
+        
+        #view_showvideo .fullvid {
+            padding: 10px 0px;
+            flex: 0 1 20%;
+            display: flex;
+            border-bottom: 2px solid black;
+        }
+        
+        #view_showvideo .fullvid .vidholder {
+            width: 30%;
+            padding-right: 40px;
+        }
+        
+        #view_showvideo .fullvid video {
+            width: 100%;
+        }
+        
+        #view_showvideo .transcriptslides {
+            flex: 1 1 80%;
+            overflow-y: auto;
+        }
+        
+        #view_showvideo .transcriptTemplate {
+            height: 20vh;
+            padding: 20px 0px;
+            display: flex;
+            align-items: center;
+        }
+        
+        #view_showvideo .transcriptTemplate img {
+            height: 100%;
+            padding-right: 30px;
+        }
     </style>
-
+    <div class="fullvid">
+        <div class="vidholder">
+            <video class="videoPlaceholder" controls></video>
+        </div>
+        <div>
+            <h2 class="filename"></h2>
+            <p class="fullTranscript"></p>
+        </div>
+    </div>
+    <h3>Transcript</h3>
+    <div class="transcriptslides">
+        <div class="transcriptTemplate" style="display:none">
+            <img>
+            <div>
+                <span class="wdrow">
+                    <span class="ts"></span>
+                <span class="snt"></span>
+                </span>
+            </div>
+        </div>
+    </div>
 </div>

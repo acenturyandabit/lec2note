@@ -11,11 +11,17 @@
             width: 100%;
         }
         
+        #view_sidebar .sidebar>div:hover {
+            background: #FCCDC0;
+            cursor: pointer;
+        }
+        
         #view_sidebar .sidebar {
             flex: 0 1 5%;
             display: flex;
             flex-direction: column;
             background: #FCE5CD;
+            text-align: center;
         }
         
         #view_sidebar .main_container {
@@ -23,11 +29,23 @@
             display: flex;
             flex-direction: column;
             background: #eeeeee;
+            padding-left: 20px;
+        }
+        
+        .material-icons-outlined {
+            font-size: 3em;
         }
     </style>
     <div class="sidebar">
         <img onclick="controller.switchView('home')" src="favicon.png">
-        <div onclick="controller.switchView('about')">About</div>
+        <div onclick="controller.switchView('home')">
+            <span class="material-icons-outlined">home</span>
+            <div>Home</div>
+        </div>
+        <div onclick="controller.switchView('about')">
+            <span class="material-icons-outlined">info</span>
+            <div>About</div>
+        </div>
     </div>
     <div class="main_container">
         <!-- other views go here -->

@@ -34,6 +34,7 @@ function _controller() {
         // Block the load from firing until name is ready
     }
     this.registerView = (name, options, view) => {
+        if (!view) view = options;
         if (this.pendingViews[name]) this.pendingViews[name].resolve();
         this.views[name] = {
             view: view,

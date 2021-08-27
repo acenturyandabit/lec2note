@@ -92,7 +92,7 @@ def get_file_size(inputFile):
         inputFile]
     )).decode('utf-8'))
 
-def audio_pipeline(inputFile, outputFolder):
+def audio_pipeline(inputFile, outputFolder, verbose=False):
 
     # Create the audio file caches folder if it doesn't exist
     audioCacheDir = outputFolder+"/audio_caches"
@@ -116,7 +116,20 @@ def audio_pipeline(inputFile, outputFolder):
         partialTranscript = transcribe_file(outputFile, cache_dir = transcriptCacheDir, start_time=timeCompletedUpTo)
         fullTranscript.append(partialTranscript)
         timeCompletedUpTo += duration
-    return fullTranscript
+    if verbose:
+        return fullTranscript
+    else:
+        # get the non verbose version
+        # by picking only the highest confidence (first) result and taking the words
+        collapsedWords=[]
+        for transcriptChunk in fullTranscript:
+            bestAccuracyOnly = [r[0] for r in transcriptChunk]
+            wordsOnly = [s["words"] for s in bestAccuracyOnly]
+            for wordsList in wordsOnly:
+                for word in wordsList:
+                    collapsedWords.append(word)
+        return collapsedWords
+
 
 if __name__=="__main__":
     result = audio_pipeline("audioTest.webm", ".")

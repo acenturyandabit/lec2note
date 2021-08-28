@@ -26,6 +26,7 @@ if (fs.existsSync("local.json")) {
     locale = JSON.parse(String(fs.readFileSync("local.json")));
 }
 
+let dict = {};
 
 app.post("/uploadFile", (req, res) => {
     // Uploads the file
@@ -43,36 +44,25 @@ app.post("/uploadFile", (req, res) => {
         fs.mkdirSync(`static_dir/database/${baseName}/`);
         req.files.video_uploads.mv(`static_dir/database/${baseName}/${fileName}`, (err) => {
             // callback - ask lec2note to process it
-            if (false) { // using false so i can test the statvideo endpoint
-                // save monies
-                // var spawn = require('child_process').spawn,
-                // ls    = spawn('ls');
+            if (true) { 
 
                 var spawn = require('child_process').spawn,
                 ls = spawn(`${locale.pythonStr}`, [`lec2note_main/main.py`, `static_dir/database/${baseName}/${fileName}`,
                     `static_dir/database/${baseName}`]);
 
+                // Get each line of output at a time (representing percentage done)
                 ls.stdout.on('data', function (data) {
-                    console.log('stdout: ' + data.toString());
+                    //console.log('stdout: ' + data.toString());
+                    dict[`${baseName}`] = data.toString().trim();
                 });
 
                 ls.stderr.on('data', function (data) {
-                    console.log('stderr: ' + data.toString());
+                    //console.log('stderr: ' + data.toString());
                 });
 
                 ls.on('exit', function (code) {
-                    console.log('child process exited with code ' + code.toString());
+                    //console.log('child process exited with code ' + code.toString());
                 });
-
-                // let child = exec(`${locale.pythonStr} lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`,
-                // function (error, stdout, stderr) {
-                //     console.log('stdout: ' + stdout);
-                //     console.log('stderr: ' + stderr);
-                //     if (error !== null) {
-                //         console.log('exec error: ' + error);
-                //     }
-                // });
-
 
             }
             res.end("SUCCESS");
@@ -103,8 +93,8 @@ function createFile(filename) {
 }
 
 app.get("/statVideo", (req, res) => {
-    console.log(req.query);
-    res.send(String(0)).end(); // Must send() a string not an int otherwise it is interpreted as a status code like 404
+    const {filename} = req.query;
+    res.send(String(dict[filename])).end(); // Must send() a string not an int otherwise it is interpreted as a status code like 404
 })
 
 app.post('/modify', (req, res) => {

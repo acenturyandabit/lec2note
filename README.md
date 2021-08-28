@@ -24,6 +24,8 @@ Also there's a super-low-dependency custom Single Page Web App framework in `con
 ## What we learned
 Using opencv skills to create an actual real product was fun! We also learnt a few things about nodejs express and how to use a file system as a database in a pinch XD
 
+Also, material icons from google are fantastic assets! 
+
 ## What's next for lec2note
 Popping it on a website so other people can use it would be nice :D We could also use wav2vec in the backend so that we can operate for free (sorry google)
 

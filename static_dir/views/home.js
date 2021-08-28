@@ -60,10 +60,16 @@ controller.reserveView("home");
                 newVideoListing.style.display = "";
                 // Modify the template with the specifics
                 newVideoListing.querySelector(".videoTitle").innerText = videoName;
-                newVideoListing.querySelector("img").addEventListener("error", (e) => {
+                newVideoListing.querySelector("img").addEventListener("error", async(e) => {
                     if (e.target.src != 'fallback-processing.png') e.target.src = 'fallback-processing.png';
+
+                    // Also get the percentage
+                    let vpct_resp = await fetch("statVideo?f=" + videoName);
+                    let vpct_txt = await vpct_resp.text();
+                    newVideoListing.querySelector(".videoTitle").innerText = `${videoName}: ${vpct_txt}% complete`;
                     setTimeout(() => {
                         e.target.src = `database/${videoName}/thumbnail.png`;
+                        newVideoListing.querySelector(".videoTitle").innerText = `${videoName}`;
                     }, 3000);
                 })
                 newVideoListing.querySelector("img").src = `database/${videoName}/thumbnail.png`;

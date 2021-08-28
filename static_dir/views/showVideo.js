@@ -18,6 +18,14 @@ controller.reserveView("showVideo");
         return `${String(hrs).padStart(2,"0")}:${String(mins).padStart(2,"0")}:${String(s).padStart(2,"0")}.${String(ds).padStart(1,"0")}`
     }
 
+    function editSlides(event) {
+        console.log("input event fired");
+    }
+
+    templateDiv.querySelector("#transcriptslides").addEventListener("input", editSlides);
+
+
+
     controller.registerView("showVideo", {}, {
         load: async() => {
             let froot = `database/${controller.state.video}`;

@@ -2,6 +2,7 @@ node_modules
 lec2note_main/google-credentials.json
 /static_dir/database/*
 !/static_dir/database/sampleVideo
+/static_dir/database/sampleVideo/modify.json
 test.output.json
 lec2note_main/audio_caches
 lec2note_main/transcript_caches

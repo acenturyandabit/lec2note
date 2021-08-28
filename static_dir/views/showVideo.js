@@ -18,13 +18,34 @@ controller.reserveView("showVideo");
         return `${String(hrs).padStart(2,"0")}:${String(mins).padStart(2,"0")}:${String(s).padStart(2,"0")}.${String(ds).padStart(1,"0")}`
     }
 
-    function editSlides(event) {
+    // When the user edits the transcript
+    function editSlides(event, startTime, filename) {
         console.log("input event fired");
+        var url = "/modify";
+        var request = new XMLHttpRequest();
+        request.open('POST', url, true);
+
+        request.onreadystatechange = function() { // request successful
+            // we can use server response to our request now
+            if (request.readyState === XMLHttpRequest.DONE) {
+                console.log(request.responseText);
+            };
+        }
+
+        request.onerror = function() {
+            // request failed
+        };
+
+        request.send(JSON.stringify({"start_time": startTime, "new_words":event.target.innerText, 
+            "filename": filename}));
     }
 
-    templateDiv.querySelector("#transcriptslides").addEventListener("input", editSlides);
-
-
+    // Allow additional parameters for editSlides
+    function handleEvent(startTime, filename) {
+        return function(e) {
+            editSlides(e, startTime, filename); 
+        };
+    }
 
     controller.registerView("showVideo", {}, {
         load: async() => {
@@ -34,6 +55,20 @@ controller.reserveView("showVideo");
             // fetch the video info and display it
             let st_resp = await fetch(`${froot}/data.json`);
             let st_json = await st_resp.json();
+
+            // fetch modified text
+            let modify_resp = await fetch(`${froot}/modify.json`);
+            let modify_text = await modify_resp.text();
+            let modify_arr = await modify_text.split("\n").slice(0,-1);
+
+            // override original transcript with any modifications
+            modify_arr.forEach(i => {
+                let line = JSON.parse(i);
+                let startTime = line["start_time"];
+                let newWords = line["new_words"];
+
+                st_json.scenes.find(t=>t.start_time===startTime).words = newWords;
+            })
 
             // Load metadata
             // Create a new video element
@@ -49,6 +84,13 @@ controller.reserveView("showVideo");
                 nextScene.querySelector("img").src = `${froot}/${i.fname}`;
                 nextScene.querySelector("span.ts").innerText = d2ts(i.start_time);
                 nextScene.querySelector("span.snt").innerText = i.words;
+
+                // Add event listener for modified transcript
+                const startTime = i.start_time;
+                const filename = st_json.meta.fileName;
+                nextScene.querySelector("span.snt").addEventListener("input", 
+                    handleEvent(startTime, filename));
+
                 transcriptCntr.appendChild(nextScene);
                 nextScene.addEventListener("click", (e) => {
                     video.currentTime = i.start_time;

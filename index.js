@@ -2,7 +2,12 @@ const express = require("express");
 const fs = require("fs");
 const { exec } = require("child_process");
 const fileUpload = require("express-fileupload");
+
 var app = new express();
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.text());
+
 app.use(express.static("static_dir"));
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
@@ -47,6 +52,39 @@ app.post("/uploadFile", (req, res) => {
         return;
     }
 
+})
+
+function createFile(filename) {
+    fs.open(filename,'r',function(err, fd){
+      if (err) {
+        fs.writeFile(filename, '', function(err) {
+            if(err) {
+                console.log(err);
+            }
+            console.log("The file was saved!");
+        });
+      } else {
+        console.log("The file exists!");
+      }
+    });
+  }
+
+app.post('/modify', (req, res) => {
+    console.log("modify");
+    const data = JSON.parse(req.body);
+    console.log(data);
+
+    const folder = data["filename"].split(".")[0];
+    console.log(folder);
+    const filename = "static_dir/database/" + folder + "/modify.json";
+    createFile(filename);
+
+    fs.appendFile(filename, JSON.stringify(data)+"\n", function(err) {
+        if(err) {
+            console.log(err);
+        }
+        console.log("The file was saved!");
+    });
 })
 
 

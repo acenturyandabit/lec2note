@@ -12,7 +12,7 @@ controller.reserveView("home");
         var url = "/uploadFile";
         var request = new XMLHttpRequest();
         request.open('POST', url, true);
-        console.log("hello1");
+
         request.onreadystatechange = function() { // request successful
             // we can use server response to our request now
             if (request.readyState === XMLHttpRequest.DONE) {
@@ -20,7 +20,6 @@ controller.reserveView("home");
                 controller.switchView("home"); // refresh window
             };
         }
-        console.log("hello3");
 
         request.onerror = function() {
             // request failed

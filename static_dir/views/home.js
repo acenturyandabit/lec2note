@@ -13,13 +13,13 @@ controller.reserveView("home");
         var request = new XMLHttpRequest();
         request.open('POST', url, true);
         console.log("hello1");
-        request.onload = function() { // request successful
+        request.onreadystatechange = function() { // request successful
             // we can use server response to our request now
-            console.log(request.responseText);
-            console.log("hello");
-            setTimeout (()=>{window.reload(); console.log("window");},3000);
-            console.log("hello2");
-        };
+            if (request.readyState === XMLHttpRequest.DONE) {
+                console.log(request.responseText);
+                controller.switchView("home"); // refresh window
+            };
+        }
         console.log("hello3");
 
         request.onerror = function() {

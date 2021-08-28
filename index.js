@@ -29,18 +29,23 @@ app.post("/uploadFile", (req, res) => {
     }
     try {
         fs.mkdirSync(`static_dir/database/${baseName}/`);
+        req.files.video_uploads.mv(`static_dir/database/${baseName}/${fileName}`, (err) => {
+            // callback - ask lec2note to process it
+            if (false) {
+                // save monies
+                exec(`python3 lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`, (e) => {
+                    console.log(e);
+                });
+            }
+            res.end("SUCCESS");
+        });
+        // Validate that the file must be less than 10mb and 10s, so that we can have a live demo
+        // also ratelimit this api just in case
     } catch (e) {
+        res.end("FAIL");
         console.log(e);
         return;
     }
-    req.files.video_uploads.mv(`static_dir/database/${baseName}/${fileName}`, (err) => {
-        // callback - ask lec2note to process it
-        exec(`python3 lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`, (e) => {
-            console.log(e);
-        });
-    });
-    // Validate that the file must be less than 10mb and 10s, so that we can have a live demo
-    // also ratelimit this api just in case
 
 })
 

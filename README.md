@@ -8,8 +8,11 @@ Lec2Note turns lectures into frame-synchronised transcripts to support your lear
 - Match narration with slides without the manual effort
 
 ## How we built it
-Lec2Note uses Google's Speech to text API and OpenCV. Google speech to text is a cost effective way of getting high quality transcriptions from audio, and OpenCV uses local processing power to identify key turning points in the video stream.
-
+Lec2Note uses Google's Speech to text API and OpenCV. 
+- Google speech to text is a cost effective way of getting high quality transcriptions from audio.
+- OpenCV uses local processing power to identify key turning points in the video stream.
+- ffmpeg and ffprobe were used to help with file type conversions.
+All of these tools are reasonably cross platform!
 ## Challenges we ran into
 - Creating a video pipeline that was reliable enough to split chunks of video without over-splitting busy periods or missing key transitions was quite difficult. 
 - File format conversions are messy. Even things like # of audio channels tripped us up.

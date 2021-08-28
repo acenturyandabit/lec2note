@@ -27,7 +27,7 @@
         
         .searchbar {
             flex: 0 1 30px;
-            margin: 20px;
+            margin: 20px 0px;
         }
         
         .searchbar>* {
@@ -45,13 +45,18 @@
         
         .result_template>img {
             width: 100%;
+            border-radius: 5px;
             max-height: calc(100% - 1.5em);
         }
         
         .results_container>div {
             flex: 0 0 20%;
-            height: 20vh;
-            border: 1px solid black;
+            height: 24vh;
+            width: 32vh;
+            margin: 2vh;
+            padding: 1vh;
+            border-radius: 10px;
+            background: white;
         }
     </style>
     <div class="mainView">
@@ -70,7 +75,7 @@
                 </form>
             </div>
             <div class="result_template" style="display:none">
-                <img>
+                <img onerror="if (this.src != 'fallback-processing.png') this.src = 'fallback-processing.png';">
                 <div>
                     <span class="videoTitle"></span>
                     <span class="videoTags"></span>

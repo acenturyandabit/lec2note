@@ -133,7 +133,7 @@ controller.reserveView("showVideo");
                     video.currentTime = (i.start_time + i.end_time) / 2;
                 })
                 nextSceneCache.push({ d: i, el: nextScene });
-                totalText += i.words;
+                totalText += (i.words || "");
             });
 
             // Show filename

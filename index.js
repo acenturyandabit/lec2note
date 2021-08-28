@@ -43,7 +43,7 @@ app.post("/uploadFile", (req, res) => {
         fs.mkdirSync(`static_dir/database/${baseName}/`);
         req.files.video_uploads.mv(`static_dir/database/${baseName}/${fileName}`, (err) => {
             // callback - ask lec2note to process it
-            if (true) {
+            if (false) { // using false so i can test the statvideo endpoint
                 // save monies
                 // var spawn = require('child_process').spawn,
                 // ls    = spawn('ls');
@@ -101,6 +101,11 @@ function createFile(filename) {
         }
     });
 }
+
+app.get("/statVideo", (req, res) => {
+    console.log(req.query);
+    res.send(String(0)).end(); // Must send() a string not an int otherwise it is interpreted as a status code like 404
+})
 
 app.post('/modify', (req, res) => {
     console.log("modify");

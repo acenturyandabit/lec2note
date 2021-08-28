@@ -35,7 +35,7 @@ class betterFrameCacher:
 
 def video_pipeline(inputFile, outputFolder):
     
-    #print("Video pipeline started.")
+    # Video pipeline started.
     # Create the /frames directory
     if not os.path.exists(outputFolder+"/frames"):
         os.mkdir(outputFolder+"/frames")
@@ -48,9 +48,7 @@ def video_pipeline(inputFile, outputFolder):
     frameCount = 0
     fps = cap.get(cv2.CAP_PROP_FPS)
 
-    #print(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     fcount = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-    
     
     results = []
     currentSectionIsVideo = False
@@ -80,9 +78,10 @@ def video_pipeline(inputFile, outputFolder):
             "fname": f"frames/{frameCount - sequenceFrames}_{frameCount}.jpg"
         }
 
-        #print(f"wrote record {protoResult['fname']}")
-
+        # wrote record {protoResult['fname']}
+        # calculate percentage
         print(int(50 + (frameCount / fcount) * 50),flush=True)
+        
         # Behave differently for subvideos and stills
         # Arbitrary threshold of 10s to be counted as a real video
         if currentSectionIsVideo and videoSequenceFrames > 10*fps:
@@ -149,9 +148,7 @@ def video_pipeline(inputFile, outputFolder):
 
         if frameCount % 1000 == 0:
             pass
-            #print(f"Processed up to {frameCount/fps}s")
-
-        
+            # Processed up to {frameCount/fps}s
 
     # write the final slide
     writeRecord()

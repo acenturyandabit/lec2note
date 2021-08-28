@@ -8,13 +8,13 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.path.dirname (os.path.abspath(__
 
 
 def transcribe_file(speech_file, cache_dir=None, start_time=0, audioChannels=2):
-    #print("Transcribing file using google speech...")
+    # Transcribing file using google speech...
     cache_path = None
     if cache_dir!=None:
         # check the cache
         cache_path = f"{cache_dir}/{os.path.basename(speech_file)}.json"
         if os.path.exists(cache_path):
-            #print("Cache found, attempting read...")
+            # Cache found, attempting read...
             try:
                 with open(cache_path,"r") as cacheFile:
                     return json.load(cacheFile)
@@ -22,7 +22,6 @@ def transcribe_file(speech_file, cache_dir=None, start_time=0, audioChannels=2):
                 os.unlink(cache_path) # file was invalid
 
     # Cache doesn't exist, actually do the query now
-    #print("Cache miss or empty, using Google Speech...")
     client = speech.SpeechClient()
     audio_file=open(speech_file, "rb")
     content = audio_file.read()
@@ -66,7 +65,7 @@ def run_ffmpeg(inputFile, outputFolder, tstart, duration, outputFile = None):
     if outputFile == None:
         outputFile = f"{outputFolder}/audioOnly_{tstart}_{tstart+duration}.flac"
     if os.path.exists(outputFile):
-        #print ("Skip ffmpeg - cache hit")
+        # Skip ffmpeg - cache hit
         return 0
     process = subprocess.Popen([
         "ffmpeg",
@@ -117,16 +116,11 @@ def audio_pipeline(inputFile, outputFolder, verbose=False):
     duration = 15 # seconds - each request is rounded up to 15s.
     timeToComplete = get_file_size(inputFile)
 
-    #print(timeToComplete)
-
     channelCount = get_audio_channels(inputFile)
     fullTranscript = []
     while timeCompletedUpTo<timeToComplete:
 
-        
-        
-
-        #print (f"transcribing {timeCompletedUpTo} to {timeCompletedUpTo+duration}s...")
+        # transcribing {timeCompletedUpTo} to {timeCompletedUpTo+duration}s...
         outputFile = f"{audioCacheDir}/audioOnly_{timeCompletedUpTo}_{timeCompletedUpTo+duration}.flac"
         run_ffmpeg(inputFile, audioCacheDir, timeCompletedUpTo, duration, outputFile)
         partialTranscript = transcribe_file(outputFile, cache_dir = transcriptCacheDir, start_time=timeCompletedUpTo, audioChannels=channelCount)
@@ -135,7 +129,6 @@ def audio_pipeline(inputFile, outputFolder, verbose=False):
 
         # each bit is rounded up to 15 so sometimes is larger
         print(int(min(((timeCompletedUpTo+duration) / timeToComplete) * 50, 50)),flush=True)
-
 
         fullTranscript.append(partialTranscript)
         timeCompletedUpTo += duration

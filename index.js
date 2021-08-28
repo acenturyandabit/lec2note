@@ -52,16 +52,7 @@ app.post("/uploadFile", (req, res) => {
 
                 // Get each line of output at a time (representing percentage done)
                 ls.stdout.on('data', function (data) {
-                    //console.log('stdout: ' + data.toString());
                     dict[`${baseName}`] = data.toString().trim();
-                });
-
-                ls.stderr.on('data', function (data) {
-                    //console.log('stderr: ' + data.toString());
-                });
-
-                ls.on('exit', function (code) {
-                    //console.log('child process exited with code ' + code.toString());
                 });
 
             }

@@ -1,4 +1,4 @@
-make it so when you upload the file the page refreshes and the new item shows up with a progress bar
+delta square-based video segmentation
 
 Restyle home page with some greebling
 
@@ -6,15 +6,15 @@ Run through the presentation, create 3 min video
 
 Allow editing of files
 
-variance-based video segmentation -- actually somewhat an issue
 
-add user accounts + a file length limit + a processing queue, then pop it on steven's server ... or dont
 
 make search work
 
 Highlight mode
 
+make it so when you upload the file the page refreshes and the new item shows up with a progress bar
+
 Create a landing page
-upload to my server
+add user accounts + a file length limit + a processing queue, then pop it on steven's server ... or dont
 give it a domain name
 letsencrypt?

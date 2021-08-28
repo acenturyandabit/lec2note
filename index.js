@@ -14,6 +14,14 @@ app.get("/listVideos", (req, res) => {
     });
 });
 
+let locale = {
+    pythonStr: "python3"
+};
+if (fs.existsSync("local.json")) {
+    locale = JSON.parse(String(fs.readFileSync("local.json")));
+}
+
+
 app.post("/uploadFile", (req, res) => {
     // Uploads the file
     console.log("yes");
@@ -31,9 +39,9 @@ app.post("/uploadFile", (req, res) => {
         fs.mkdirSync(`static_dir/database/${baseName}/`);
         req.files.video_uploads.mv(`static_dir/database/${baseName}/${fileName}`, (err) => {
             // callback - ask lec2note to process it
-            if (false) {
+            if (true) {
                 // save monies
-                exec(`python3 lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`, (e) => {
+                exec(`${locale.pythonStr} lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`, (e) => {
                     console.log(e);
                 });
             }

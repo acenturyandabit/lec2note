@@ -105,6 +105,7 @@ def video_pipeline(inputFile, outputFolder):
         return hnorm
 
     oldPhash = None
+    oldDiffs = []
     # Process all frames
     while True:
         ret, frame = cap.read()
@@ -115,15 +116,21 @@ def video_pipeline(inputFile, outputFolder):
         if prevFrame is not None:
             difference = bitsDifferent(phash, oldPhash)
             # Check if there was a huge difference (i.e. a slide has popped up, etc)
-            if difference > 20:
-                writeRecord()
-                # reset most interesting frame
-                sequencebestFrameCache.set(frame)
-            else:
-                if difference > 2:
+            if difference > 2:
+                significant=True
+                for d in oldDiffs:
+                    if difference<d+5:
+                        significant=False
+                if significant:
+                    writeRecord()
+                    # reset most interesting frame
+                    sequencebestFrameCache.set(frame)
+                else:
                     videoSequenceFrames += 1
                     currentSectionIsVideo = True
-
+            oldDiffs.append(difference)
+            if len(oldDiffs) > 10:
+                oldDiffs.pop(0)
         # Also pick out the most interesting frames from the picture, lest we get weird fade-ins
         sequencebestFrameCache.update(frame)
         globalBestFrameCache.update(frame)
@@ -135,6 +142,8 @@ def video_pipeline(inputFile, outputFolder):
 
         if frameCount % 1000 == 0:
             print(f"Processed up to {frameCount/fps}s")
+
+        
 
     # write the final slide
     writeRecord()

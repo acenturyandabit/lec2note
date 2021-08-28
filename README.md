@@ -17,10 +17,13 @@ All of these tools are reasonably cross platform!
 - Creating a video pipeline that was reliable enough to split chunks of video without over-splitting busy periods or missing key transitions was quite difficult. 
 - File format conversions are messy. Even things like # of audio channels tripped us up.
 ## Accomplishments that we're proud of
+Getting a robust video and audio processing pipeline up!
 
 ## What we learned
+Using opencv skills to create an actual real product was fun! We also learnt a few things about nodejs express and how to use a file system as a database in a pinch XD
 
 ## What's next for lec2note
+Popping it on a website so other people can use it would be nice :D We could also use wav2vec in the backend so that we can operate for free (sorry google)
 
 ## Misc
-You need to add your google credentials file as a `google-credentials.json` in the `lec2note_main` directory
+You need to add your google credentials file as a `google-credentials.json` in the `lec2note_main` directory to use this.

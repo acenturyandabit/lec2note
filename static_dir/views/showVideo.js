@@ -87,17 +87,21 @@ controller.reserveView("showVideo");
 
             // fetch modified text
             let modify_resp = await fetch(`${froot}/modify.json`);
-            let modify_text = await modify_resp.text();
-            let modify_arr = await modify_text.split("\n").slice(0,-1);
+            
+            // first check if modify exists
+            if (modify_resp.ok) {
+                let modify_text = await modify_resp.text();
+                let modify_arr = await modify_text.split("\n").slice(0,-1);
 
-            // override original transcript with any modifications
-            modify_arr.forEach(i => {
-                let line = JSON.parse(i);
-                let startTime = line["start_time"];
-                let newWords = line["new_words"];
+                // override original transcript with any modifications
+                modify_arr.forEach(i => {
+                    let line = JSON.parse(i);
+                    let startTime = line["start_time"];
+                    let newWords = line["new_words"];
 
-                st_json.scenes.find(t=>t.start_time===startTime).words = newWords;
-            })
+                    st_json.scenes.find(t=>t.start_time===startTime).words = newWords;
+                })
+            }
 
             // Load metadata
             // Create a new video element

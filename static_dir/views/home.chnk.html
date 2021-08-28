@@ -79,13 +79,13 @@
         }
     </style>
     <div class="mainView">
-        <div class="searchbar"><input style="width: 80vw" placeholder="Search by name, tag, time or more..."><button>Go</button></button>
+        <div class="searchbar"><input class="searcher" style="width: 80vw" placeholder="Search by name..."><button>Go</button></button>
         </div>
         <div class="results_container">
             <div class="upload_button">
                 <div class="upload-inner-dash">
                     <p> &#65291; </p>
-                    <p>Choose videos to upload (MP4)</p>
+                    <p>Choose videos to upload (.mp4, .webm)</p>
                 </div>
                 <!-- ghost form still needed so we can upload the file-->
                 <form id="uploadform" action="/uploadFile" method="post" enctype="multipart/form-data" style="display:none">

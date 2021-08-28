@@ -7,6 +7,11 @@ controller.reserveView("home");
     let resultsContainer = templateDiv.querySelector(".results_container");
     let videoListingsCache = [];
 
+    templateDiv.querySelector(".searcher").addEventListener("input", (e) => {
+        queryText = e.target.value;
+        videoListingsCache.forEach(i => i.e.style.display = "none");
+        videoListingsCache.filter(i => (i.n.includes(queryText))).forEach(i => i.e.style.display = "");
+    });
     // Code for file upload
     function formSubmit(event) {
         var url = "/uploadFile";
@@ -64,12 +69,13 @@ controller.reserveView("home");
                 newVideoListing.querySelector("img").src = `database/${videoName}/thumbnail.png`;
                 // Append the template
                 resultsContainer.appendChild(newVideoListing);
-                videoListingsCache.push(newVideoListing);
+                videoListingsCache.push({ n: videoName, e: newVideoListing });
             })
         },
         unload: () => {
             templateDiv.style.display = "none";
-            videoListingsCache.forEach(i => i.remove());
+            videoListingsCache.forEach(i => i.e.remove());
+            videoListingsCache = [];
         }
     })
 })();

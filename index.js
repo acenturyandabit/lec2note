@@ -4,7 +4,7 @@ const { exec } = require("child_process");
 const fileUpload = require("express-fileupload");
 
 var app = new express();
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.text());
 
@@ -63,19 +63,19 @@ app.post("/uploadFile", (req, res) => {
 })
 
 function createFile(filename) {
-    fs.open(filename,'r',function(err, fd){
-      if (err) {
-        fs.writeFile(filename, '', function(err) {
-            if(err) {
-                console.log(err);
-            }
-            console.log("The file was saved!");
-        });
-      } else {
-        console.log("The file exists!");
-      }
+    fs.open(filename, 'r', function(err, fd) {
+        if (err) {
+            fs.writeFile(filename, '', function(err) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("The file was saved!");
+            });
+        } else {
+            console.log("The file exists!");
+        }
     });
-  }
+}
 
 app.post('/modify', (req, res) => {
     console.log("modify");
@@ -87,12 +87,13 @@ app.post('/modify', (req, res) => {
     const filename = "static_dir/database/" + folder + "/modify.json";
     createFile(filename);
 
-    fs.appendFile(filename, JSON.stringify(data)+"\n", function(err) {
-        if(err) {
+    fs.appendFile(filename, JSON.stringify(data) + "\n", function(err) {
+        if (err) {
             console.log(err);
         }
         console.log("The file was saved!");
     });
+    res.end();
 })
 
 

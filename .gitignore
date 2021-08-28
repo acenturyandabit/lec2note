@@ -11,3 +11,4 @@ lec2note_main/thumbnail.png
 __pycache__
 upload_tmp/*
 !upload_tmp/placeholder
+local.json

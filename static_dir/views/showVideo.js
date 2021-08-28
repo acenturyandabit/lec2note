@@ -8,14 +8,43 @@ controller.reserveView("showVideo");
     let sceneTemplate = templateDiv.querySelector(".transcriptTemplate");
     let transcriptCntr = templateDiv.querySelector(".transcriptslides");
     let video = templateDiv.querySelector(".videoPlaceholder");
+    let currentFramePointer = {
+        start_time: 0,
+        end_time: 0
+    };
+
     let nextSceneCache = [];
+
+    video.addEventListener("timeupdate", () => {
+        // Check if we should proceed
+        let shouldProceed = false;
+        let proceedTo = {};
+        if (video.currentTime < currentFramePointer.start_time || video.currentTime > currentFramePointer.end_time) {
+            // Check if there exists a frame to switch to
+            nextSceneCache.forEach(ent => {
+                let i = ent.d;
+                if (i.start_time < video.currentTime && video.currentTime < i.end_time) {
+                    proceedTo = ent;
+                    shouldProceed = true;
+                }
+            })
+        }
+        if (shouldProceed) {
+            currentFramePointer = proceedTo.d;
+            // Unfocus all elements
+            Array.from(transcriptCntr.children).forEach(i => i.classList.remove("focused"));
+            // Focus on the element at the current time
+            proceedTo.el.classList.add("focused");
+            proceedTo.el.scrollIntoViewIfNeeded();
+        }
+    })
 
     let d2ts = (n) => {
         let hrs = Math.floor(n / 3600);
         let mins = Math.floor(n / 60) % 60;
         let s = Math.floor(n - (Math.floor(n / 60) * 60));
         let ds = Math.floor((n - Math.floor(n)) * 100);
-        return `${String(hrs).padStart(2,"0")}:${String(mins).padStart(2,"0")}:${String(s).padStart(2,"0")}.${String(ds).padStart(1,"0")}`
+        return `${String(hrs).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(s).padStart(2, "0")}.${String(ds).padStart(1, "0")}`
     }
 
     // When the user edits the transcript
@@ -91,11 +120,12 @@ controller.reserveView("showVideo");
                 nextScene.querySelector("span.snt").addEventListener("input", 
                     handleEvent(startTime, filename));
 
+                nextScene.querySelector("span.snt").innerText = i.words || "";
                 transcriptCntr.appendChild(nextScene);
                 nextScene.addEventListener("click", (e) => {
                     video.currentTime = i.start_time;
                 })
-                nextSceneCache.push(nextScene);
+                nextSceneCache.push({ d: i, el: nextScene });
                 totalText += i.words;
             });
 
@@ -110,7 +140,8 @@ controller.reserveView("showVideo");
         },
         unload: () => {
             templateDiv.style.display = "none";
-            nextSceneCache.forEach(i => i.remove());
+            nextSceneCache.forEach(i => i.el.remove());
+            nextSceneCache = [];
         }
     })
 })();

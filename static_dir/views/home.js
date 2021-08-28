@@ -12,23 +12,25 @@ controller.reserveView("home");
         var url = "/uploadFile";
         var request = new XMLHttpRequest();
         request.open('POST', url, true);
-
         request.onreadystatechange = function() { // request successful
             // we can use server response to our request now
             if (request.readyState === XMLHttpRequest.DONE) {
-                console.log(request.responseText);
                 controller.switchView("home"); // refresh window
             };
         }
-
         request.onerror = function() {
             // request failed
         };
-
         request.send(new FormData(event.target)); // create FormData from form that triggered event
         event.preventDefault();
     }
 
+    templateDiv.querySelector(".upload-inner-dash").addEventListener("click", () => {
+        templateDiv.querySelector("#video_uploads").click();
+    })
+    templateDiv.querySelector("#video_uploads").addEventListener("input", () => {
+        templateDiv.querySelector("#vuploadsubmitbtn").click();
+    })
     templateDiv.querySelector("#uploadform").addEventListener("submit", formSubmit);
 
 

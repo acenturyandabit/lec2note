@@ -19,6 +19,10 @@
             padding-right: 40px;
         }
         
+        #view_showvideo .fullvid .transcriptholder {
+            flex: 0 1 70%;
+        }
+        
         #view_showvideo .fullvid video {
             width: 100%;
         }
@@ -39,12 +43,16 @@
             height: 100%;
             padding-right: 30px;
         }
+        
+        .focused {
+            background: #B3C2FC;
+        }
     </style>
     <div class="fullvid">
         <div class="vidholder">
             <video class="videoPlaceholder" controls></video>
         </div>
-        <div>
+        <div class="transcriptholder">
             <h2 class="filename"></h2>
             <p class="fullTranscript"></p>
         </div>

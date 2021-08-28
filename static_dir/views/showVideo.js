@@ -65,14 +65,17 @@ controller.reserveView("showVideo");
             // request failed
         };
 
-        request.send(JSON.stringify({"start_time": startTime, "new_words":event.target.innerText, 
-            "filename": filename}));
+        request.send(JSON.stringify({
+            "start_time": startTime,
+            "new_words": event.target.innerText,
+            "filename": filename
+        }));
     }
 
     // Allow additional parameters for editSlides
     function handleEvent(startTime, filename) {
         return function(e) {
-            editSlides(e, startTime, filename); 
+            editSlides(e, startTime, filename);
         };
     }
 
@@ -87,11 +90,11 @@ controller.reserveView("showVideo");
 
             // fetch modified text
             let modify_resp = await fetch(`${froot}/modify.json`);
-            
+
             // first check if modify exists
             if (modify_resp.ok) {
                 let modify_text = await modify_resp.text();
-                let modify_arr = await modify_text.split("\n").slice(0,-1);
+                let modify_arr = await modify_text.split("\n").slice(0, -1);
 
                 // override original transcript with any modifications
                 modify_arr.forEach(i => {
@@ -99,7 +102,7 @@ controller.reserveView("showVideo");
                     let startTime = line["start_time"];
                     let newWords = line["new_words"];
 
-                    st_json.scenes.find(t=>t.start_time===startTime).words = newWords;
+                    st_json.scenes.find(t => t.start_time === startTime).words = newWords;
                 })
             }
 
@@ -121,13 +124,13 @@ controller.reserveView("showVideo");
                 // Add event listener for modified transcript
                 const startTime = i.start_time;
                 const filename = st_json.meta.fileName;
-                nextScene.querySelector("span.snt").addEventListener("input", 
+                nextScene.querySelector("span.snt").addEventListener("input",
                     handleEvent(startTime, filename));
 
-                nextScene.querySelector("span.snt").innerText = i.words || "";
+                nextScene.querySelector("span.snt").innerText = i.words || "[BLANK]";
                 transcriptCntr.appendChild(nextScene);
                 nextScene.addEventListener("click", (e) => {
-                    video.currentTime = i.start_time;
+                    video.currentTime = (i.start_time + i.end_time) / 2;
                 })
                 nextSceneCache.push({ d: i, el: nextScene });
                 totalText += i.words;

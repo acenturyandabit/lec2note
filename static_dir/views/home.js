@@ -55,6 +55,12 @@ controller.reserveView("home");
                 newVideoListing.style.display = "";
                 // Modify the template with the specifics
                 newVideoListing.querySelector(".videoTitle").innerText = videoName;
+                newVideoListing.querySelector("img").addEventListener("error", (e) => {
+                    if (e.target.src != 'fallback-processing.png') e.target.src = 'fallback-processing.png';
+                    setTimeout(() => {
+                        e.target.src = `database/${videoName}/thumbnail.png`;
+                    }, 3000);
+                })
                 newVideoListing.querySelector("img").src = `database/${videoName}/thumbnail.png`;
                 // Append the template
                 resultsContainer.appendChild(newVideoListing);

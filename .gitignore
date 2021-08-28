@@ -1,5 +1,5 @@
 node_modules
-google-credentials.json
+lec2note_main/google-credentials.json
 /static_dir/database/*
 !/static_dir/database/sampleVideo
 test.output.json

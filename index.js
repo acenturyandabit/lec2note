@@ -29,7 +29,6 @@ if (fs.existsSync("local.json")) {
 
 app.post("/uploadFile", (req, res) => {
     // Uploads the file
-    console.log("yes");
     let fileName = req.files.video_uploads.name;
     let baseName = fileName.split(".");
     baseName.pop();
@@ -46,9 +45,35 @@ app.post("/uploadFile", (req, res) => {
             // callback - ask lec2note to process it
             if (true) {
                 // save monies
-                exec(`${locale.pythonStr} lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`, (e) => {
-                    console.log(e);
+                // var spawn = require('child_process').spawn,
+                // ls    = spawn('ls');
+
+                var spawn = require('child_process').spawn,
+                ls = spawn(`${locale.pythonStr}`, [`lec2note_main/main.py`, `static_dir/database/${baseName}/${fileName}`,
+                    `static_dir/database/${baseName}`]);
+
+                ls.stdout.on('data', function (data) {
+                    console.log('stdout: ' + data.toString());
                 });
+
+                ls.stderr.on('data', function (data) {
+                    console.log('stderr: ' + data.toString());
+                });
+
+                ls.on('exit', function (code) {
+                    console.log('child process exited with code ' + code.toString());
+                });
+
+                // let child = exec(`${locale.pythonStr} lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`,
+                // function (error, stdout, stderr) {
+                //     console.log('stdout: ' + stdout);
+                //     console.log('stderr: ' + stderr);
+                //     if (error !== null) {
+                //         console.log('exec error: ' + error);
+                //     }
+                // });
+
+
             }
             res.end("SUCCESS");
         });

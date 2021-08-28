@@ -34,7 +34,8 @@ class betterFrameCacher:
 
 
 def video_pipeline(inputFile, outputFolder):
-    print("Video pipeline started.")
+    
+    #print("Video pipeline started.")
     # Create the /frames directory
     if not os.path.exists(outputFolder+"/frames"):
         os.mkdir(outputFolder+"/frames")
@@ -46,7 +47,11 @@ def video_pipeline(inputFile, outputFolder):
     videoSequenceFrames = 0
     frameCount = 0
     fps = cap.get(cv2.CAP_PROP_FPS)
-    #fcount = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+
+    #print(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    fcount = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+    
+    
     results = []
     currentSectionIsVideo = False
 
@@ -75,7 +80,9 @@ def video_pipeline(inputFile, outputFolder):
             "fname": f"frames/{frameCount - sequenceFrames}_{frameCount}.jpg"
         }
 
-        print(f"wrote record {protoResult['fname']}")
+        #print(f"wrote record {protoResult['fname']}")
+
+        print(int(50 + (frameCount / fcount) * 50),flush=True)
         # Behave differently for subvideos and stills
         # Arbitrary threshold of 10s to be counted as a real video
         if currentSectionIsVideo and videoSequenceFrames > 10*fps:
@@ -141,7 +148,8 @@ def video_pipeline(inputFile, outputFolder):
         frameCount += 1
 
         if frameCount % 1000 == 0:
-            print(f"Processed up to {frameCount/fps}s")
+            pass
+            #print(f"Processed up to {frameCount/fps}s")
 
         
 
@@ -155,4 +163,4 @@ def video_pipeline(inputFile, outputFolder):
 
 if __name__ == "__main__":
     result = video_pipeline("audiotest.webm", ".")
-    print(result)
+    #print(result)

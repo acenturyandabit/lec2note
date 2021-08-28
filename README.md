@@ -19,11 +19,20 @@ All of these tools are reasonably cross platform!
 ## Accomplishments that we're proud of
 Getting a robust video and audio processing pipeline up!
 
+Also there's a super-low-dependency custom Single Page Web App framework in `controller.js`, making our app react-free and super slim :D
+
 ## What we learned
 Using opencv skills to create an actual real product was fun! We also learnt a few things about nodejs express and how to use a file system as a database in a pinch XD
 
 ## What's next for lec2note
 Popping it on a website so other people can use it would be nice :D We could also use wav2vec in the backend so that we can operate for free (sorry google)
 
-## Misc
-You need to add your google credentials file as a `google-credentials.json` in the `lec2note_main` directory to use this.
+## Setup
+1. Install node.js
+2. Run `npm init .` to fetch required packages.
+3. Install opencv and google speech client: `pip install opencv-python google-cloud-speech`
+4. Install `ffmpeg` and add `ffmpeg` and `ffprobe` to your system PATH.
+5. Provide a `google-credentials.json` in the `lec2note_main` directory. This needs to be created in the google cloud console.
+6. Run `node index.js` and navigate to `localhost:3234` in your browser.
+
+You'll now be able to upload and transcribe lectures!

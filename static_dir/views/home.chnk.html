@@ -59,19 +59,41 @@
             border-radius: 10px;
             background: white;
         }
+        
+        .upload-inner-dash {
+            height: 100%;
+            border: 10px dashed grey;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .upload-inner-dash>p:first-child {
+            font-size: 4em;
+            margin: -20px 0;
+        }
     </style>
     <div class="mainView">
         <div class="searchbar"><input style="width: 80vw" placeholder="Search by name, tag, time or more..."><button>Go</button></button>
         </div>
         <div class="results_container">
             <div class="upload_button">
-                <form id="uploadform" action="/uploadFile" method="post" enctype="multipart/form-data">
+                <div class="upload-inner-dash">
+                    <p> &#65291; </p>
+                    <p>Choose videos to upload (MP4)</p>
+                </div>
+                <!-- ghost form still needed so we can upload the file-->
+                <form id="uploadform" action="/uploadFile" method="post" enctype="multipart/form-data" style="display:none">
                     <div>
-                        <label for="video_uploads">Choose videos to upload (MP4)</label>
                         <input type="file" id="video_uploads" name="video_uploads" accept=".mp4">
                     </div>
                     <div>
-                        <button>Submit</button>
+                        <button id="vuploadsubmitbtn">Submit</button>
                     </div>
                 </form>
             </div>

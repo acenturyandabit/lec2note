@@ -16,6 +16,7 @@ app.get("/listVideos", (req, res) => {
 
 app.post("/uploadFile", (req, res) => {
     // Uploads the file
+    console.log("yes");
     let fileName = req.files.video_uploads.name;
     let baseName = fileName.split(".");
     baseName.pop();
@@ -34,7 +35,7 @@ app.post("/uploadFile", (req, res) => {
     }
     req.files.video_uploads.mv(`static_dir/database/${baseName}/${fileName}`, (err) => {
         // callback - ask lec2note to process it
-        exec(`python lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`, (e) => {
+        exec(`python3 lec2note_main/main.py "static_dir/database/${baseName}/${fileName}" "static_dir/database/${baseName}"`, (e) => {
             console.log(e);
         });
     });

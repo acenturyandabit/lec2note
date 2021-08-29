@@ -66,7 +66,9 @@ controller.reserveView("home");
                     // Also get the percentage
                     let vpct_resp = await fetch("statVideo?f=" + videoName);
                     let vpct_txt = await vpct_resp.text();
-                    newVideoListing.querySelector(".videoTitle").innerText = `${videoName}: ${vpct_txt}% complete`;
+                    if (vpct_txt == "undefined") vpct_txt = "Processing...";
+                    else vpct_txt = `${vpct_txt}% complete`;
+                    newVideoListing.querySelector(".videoTitle").innerText = `${videoName}: ${vpct_txt}`;
                     setTimeout(() => {
                         e.target.src = `database/${videoName}/thumbnail.png`;
                         newVideoListing.querySelector(".videoTitle").innerText = `${videoName}`;

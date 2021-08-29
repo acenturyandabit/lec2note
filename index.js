@@ -44,14 +44,15 @@ app.post("/uploadFile", (req, res) => {
         fs.mkdirSync(`static_dir/database/${baseName}/`);
         req.files.video_uploads.mv(`static_dir/database/${baseName}/${fileName}`, (err) => {
             // callback - ask lec2note to process it
-            if (true) { 
+            if (true) {
 
                 var spawn = require('child_process').spawn,
-                ls = spawn(`${locale.pythonStr}`, [`lec2note_main/main.py`, `static_dir/database/${baseName}/${fileName}`,
-                    `static_dir/database/${baseName}`]);
+                    ls = spawn(`${locale.pythonStr}`, [`lec2note_main/main.py`, `static_dir/database/${baseName}/${fileName}`,
+                        `static_dir/database/${baseName}`
+                    ]);
 
                 // Get each line of output at a time (representing percentage done)
-                ls.stdout.on('data', function (data) {
+                ls.stdout.on('data', function(data) {
                     dict[`${baseName}`] = data.toString().trim();
                 });
 
@@ -84,7 +85,7 @@ function createFile(filename) {
 }
 
 app.get("/statVideo", (req, res) => {
-    const {filename} = req.query;
+    const filename = req.query.f;
     res.send(String(dict[filename])).end(); // Must send() a string not an int otherwise it is interpreted as a status code like 404
 })
 

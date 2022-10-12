@@ -31,7 +31,7 @@ Popping it on a website so other people can use it would be nice :D We could als
 
 ## Setup
 1. Install node.js
-2. Run `npm init .` to fetch required packages.
+2. Run `npm install .` to fetch required packages.
 3. Install opencv and google speech client: `pip install opencv-python google-cloud-speech`
 4. Install `ffmpeg` and add `ffmpeg` and `ffprobe` to your system PATH.
 5. Provide a `google-credentials.json` in the `lec2note_main` directory. This needs to be created in the google cloud console.
